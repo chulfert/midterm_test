@@ -1,0 +1,23 @@
+{% extends 'midterm_app/base.html' %}
+
+{% block content %}
+<h2>API Endpoints</h2>
+<ul>
+    <li><a href="{% url 'host-list-create' %}">Hosts List and Create</a></li>
+    <li><a href="{% url 'host-detail' pk=1 %}">Host Detail (Example ID: 1)</a></li>
+    <li><a href="{% url 'discovery-list-create' %}">Discoveries List and Create</a></li>
+    <li><a href="{% url 'discovery-detail' pk=1 %}">Discovery Detail (Example ID: 1)</a></li>
+    <li><a href="{% url 'system-list-create' %}">Planetary Systems List and Create</a></li>
+    <li><a href="{% url 'system-detail' pk=1 %}">Planetary System Detail (Example ID: 1)</a></li>
+    <li><a href="{% url 'planet-list-create' %}">Planets List and Create</a></li>
+    <li><a href="{% url 'planet-detail' pk=1 %}">Planet Detail (Example ID: 1)</a></li>
+    <li><a href="{% url 'system-parameter-list-create' %}">System Parameter References List and Create</a></li>
+    <li><a href="{% url 'system-parameter-detail' pk=1 %}">System Parameter Reference Detail (Example ID: 1)</a></li>
+    <li><a href="{% url 'planets-by-discovery-method' %}">Planets by Discovery Method</a></li>
+    <li><a href="{% url 'planets-by-discovery-year' %}">Planets by Discovery Year</a></li>
+    <li><a href="{% url 'planets-by-min-mass' %}">Planets by Minimum Mass</a></li>
+    <li><a href="{% url 'hosts-by-min-planets' %}">Hosts by Minimum Planets</a></li>
+    <li><a href="{% url 'planets-by-controversial-flag' %}">Planets by Controversial Flag</a></li>
+    <li><a href="{% url 'systems-by-max-distance' %}">Planetary Systems by Maximum Distance</a></li>
+</ul>
+{% endblock %}

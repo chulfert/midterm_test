@@ -1,0 +1,103 @@
+{% extends 'midterm_app/base.html' %}
+
+{% block content %}
+<h2>Exoplanetary Systems Visualization</h2>
+<p>Click on a system to view more details.</p>
+<p>Scroll to zoom in and out.</p>
+<canvas id="systemsCanvas" width="800" height="800" style="background: #000000;"></canvas>
+<div id="tooltip" style="position: absolute; background: rgba(0, 0, 0, 0.7); color: white; padding: 5px; border-radius: 5px; display: none;"></div>
+
+<script>
+    const canvas = document.getElementById('systemsCanvas');
+    const ctx = canvas.getContext('2d');
+    const tooltip = document.getElementById('tooltip');
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    const earthRadius = 10;
+    let scaleFactor = 3; // Initial scale factor
+
+    // Safely pass the hosts data from Django to JavaScript
+    const hosts = JSON.parse('{{ hosts|escapejs }}');
+
+    function drawSystems() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Draw Earth at the center
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, earthRadius, 0, 2 * Math.PI);
+        ctx.fillStyle = 'blue';
+        ctx.fill();
+
+        hosts.forEach(host => {
+            // Convert RA and Dec to radians
+            const ra = host.ra * (Math.PI / 180);
+            const dec = host.dec * (Math.PI / 180);
+
+            // Calculate the position based on distance, RA, and Dec
+            const x = centerX + (host.distance * scaleFactor * Math.cos(dec) * Math.cos(ra));
+            const y = centerY + (host.distance * scaleFactor * Math.cos(dec) * Math.sin(ra));
+
+            // Draw the system
+            ctx.beginPath();
+            ctx.arc(x, y, 2, 0, 2 * Math.PI);
+            ctx.fillStyle = 'white';
+            ctx.fill();
+            ctx.stroke();
+
+            host.canvasX = x;
+            host.canvasY = y;
+        });
+    }
+
+    function getHostAtPosition(x, y) {
+        return hosts.find(host => {
+            const dx = host.canvasX - x;
+            const dy = host.canvasY - y;
+            return dx * dx + dy * dy < 25; // 5px radius squared
+        });
+    }
+
+    canvas.addEventListener('mousemove', event => {
+        const rect = canvas.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+
+        const host = getHostAtPosition(x, y);
+        if (host) {
+            tooltip.style.display = 'block';
+            tooltip.style.left = `${event.clientX + 10}px`;
+            tooltip.style.top = `${event.clientY + 10}px`;
+            tooltip.innerHTML = `Name: ${host.name}<br>Distance: ${host.distance} pc<br>RA: ${host.ra}<br>Dec: ${host.dec}`;
+        } else {
+            tooltip.style.display = 'none';
+        }
+    });
+
+    canvas.addEventListener('mouseout', () => {
+        tooltip.style.display = 'none';
+    });
+
+    canvas.addEventListener('wheel', event => {
+        event.preventDefault();
+        if (event.deltaY < 0) {
+            scaleFactor *= 1.1; // Zoom in
+        } else {
+            scaleFactor /= 1.1; // Zoom out
+        }
+        drawSystems();
+    });
+
+    canvas.addEventListener('click', event => {
+        const rect = canvas.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+
+        const host = getHostAtPosition(x, y);
+        if (host) {
+            window.location.href = `/hosts/${host.id}/`;
+        }
+    });
+
+    drawSystems();
+</script>
+{% endblock %}

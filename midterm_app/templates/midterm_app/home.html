@@ -1,0 +1,11 @@
+{% extends 'midterm_app/base.html' %}
+
+{% block content %}
+    <h2>Welcome to the Exoplanetary Systems Database</h2>
+    <p>Explore data on various exoplanets and their host stars.</p>
+    <h3>Statistics</h3>
+    <ul>
+        <li>Total Hosts: {{ total_hosts }}</li>
+        <li>Total Planets: {{ total_planets }}</li>
+    </ul>
+{% endblock %}

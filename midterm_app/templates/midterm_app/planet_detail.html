@@ -1,0 +1,19 @@
+{% extends 'midterm_app/base.html' %}
+
+{% block content %}
+    <h2>{{ planet.name }}</h2>
+    <p>Host: <a href="{% url 'host_detail' planet.host.id %}">{{ planet.host.name }}</a></p>
+    <p>Discovery Method: {{ planet.discovery.method }}</p>
+    <p>Discovery Year: {{ planet.discovery.year }}</p>
+    <p>Orbital Period: {{ planet.orbital_period }} days</p>
+    <p>Semi-Major Axis: {{ planet.semi_major_axis }} AU</p>
+    <p>Radius: {{ planet.radius }} Earth Radii</p>
+    <p>Mass: {{ planet.mass }} Earth Masses</p>
+    <p>Mass (sin i, Earth): {{ planet.mass_sin_i_earth }} Earth Masses</p>
+    <p>Mass (sin i, Jupiter): {{ planet.mass_sin_i_jupiter }} Jupiter Masses</p>
+    <p>Eccentricity: {{ planet.eccentricity }}</p>
+    <p>Insolation Flux: {{ planet.insolation_flux }} Earth Flux</p>
+    <p>Equilibrium Temperature: {{ planet.equilibrium_temperature }} K</p>
+    <p>Inclination: {{ planet.inclination }} degrees</p>
+    <p>Transit Duration: {{ planet.transit_duration }} hours</p>
+{% endblock %}

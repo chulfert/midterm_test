@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Exoplanetary Systems</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Exoplanetary Systems Database</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'api_endpoints' %}">API Endpoints</a></li>
+                <li><a href="{% url 'host_list' %}">Hosts</a></li>
+                <li><a href="{% url 'planet_list' %}">Planets</a></li>
+                <li><a href="{% url 'planets_near_earth' %}">Planets Near Earth</a></li>
+                <li><a href="{% url 'systems_visualization' %}">Visualization</a></li>
+                <li><a href="{% url 'report_index' %}">Report</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer>
+        <p>&copy; 2024 Exoplanetary Systems Database</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,10 @@
+{% extends 'midterm_app/base.html' %}
+
+{% block content %}
+    <h2>Planets</h2>
+    <ul>
+        {% for planet in planets %}
+            <li><a href="{% url 'planet_detail' planet.id %}">{{ planet.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

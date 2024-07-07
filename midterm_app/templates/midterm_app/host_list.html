@@ -1,0 +1,10 @@
+{% extends 'midterm_app/base.html' %}
+
+{% block content %}
+    <h2>Host Stars</h2>
+    <ul>
+        {% for host in hosts %}
+            <li><a href="{% url 'host_detail' host.id %}">{{ host.name }}</a> ({{ host.spectral_type }})</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

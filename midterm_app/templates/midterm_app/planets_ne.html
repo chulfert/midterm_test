@@ -1,0 +1,32 @@
+{% extends 'midterm_app/base.html' %}
+
+{% block content %}
+    <h2>Planets Near Earth</h2>
+    <form method="get" action="{% url 'planets_near_earth' %}">
+        <label for="distance">Distance (pc):</label>
+        <input type="number" name="distance" id="distance" value="{{ distance }}" min="0"><br>
+
+        <label for="min_mass">Min Mass (Earth Masses):</label>
+        <input type="number" name="min_mass" id="min_mass" value="{{ min_mass }}" step="0.1"><br>
+        <label for="max_mass">Max Mass (Earth Masses):</label>
+        <input type="number" name="max_mass" id="max_mass" value="{{ max_mass }}" step="0.1"><br>
+
+        <label for="min_radius">Min Radius (Earth Radii):</label>
+        <input type="number" name="min_radius" id="min_radius" value="{{ min_radius }}" step="0.1"><br>
+        <label for="max_radius">Max Radius (Earth Radii):</label>
+        <input type="number" name="max_radius" id="max_radius" value="{{ max_radius }}" step="0.1"><br>
+
+        <label for="min_temp">Min Temperature (K):</label>
+        <input type="number" name="min_temp" id="min_temp" value="{{ min_temp }}" step="0.1"><br>
+        <label for="max_temp">Max Temperature (K):</label>
+        <input type="number" name="max_temp" id="max_temp" value="{{ max_temp }}" step="0.1"><br>
+
+        <button type="submit">Filter</button>
+    </form>
+
+    <ul>
+        {% for planet in planets %}
+            <li><a href="{% url 'planet_detail' planet.id %}">{{ planet.name }}</a> ({{ planet.host.name }}, {{ planet.host.distance }} pc)</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
